@@ -4,7 +4,14 @@
 
 == DESCRIPTION:
 
-FIX (describe your package)
+overloaded_methods was inspired by erlang pattern matching. Basically, the idea is that you can specify a method and several code blocks based on aspects of the parameters. Here's an example:
+
+overload_method :even_odd do |m|
+  m.when {|number| number % 2 == 0 }.do { :even }
+  m.when {|number| number % 2 == 1 }.do { :odd }
+end
+
+You can then call even_odd(2) and get :even, even_odd(3) gives you :odd.
 
 == FEATURES/PROBLEMS:
 
@@ -20,13 +27,13 @@ FIX (describe your package)
 
 == INSTALL:
 
-* FIX (sudo gem install, anything else)
+working on gemspec for github.
 
 == LICENSE:
 
 (The MIT License)
 
-Copyright (c) 2008 FIX
+Copyright (c) 2008 Corey Haines
 
 Permission is hereby granted, free of charge, to any person obtaining
 a copy of this software and associated documentation files (the
