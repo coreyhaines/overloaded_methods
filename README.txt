@@ -1,6 +1,6 @@
 = overloaded_methods
 
-* FIX (url)
+http://github.com/coreyhaines/overloaded_methods
 
 == DESCRIPTION:
 
