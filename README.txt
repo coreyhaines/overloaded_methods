@@ -66,7 +66,7 @@ end
 
 == REQUIREMENTS:
 
-* FIX (list of requirements)
+Ruby
 
 == INSTALL:
 
