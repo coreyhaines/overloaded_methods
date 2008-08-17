@@ -15,6 +15,8 @@ You can then call even_odd(2) and get :even, even_odd(3) gives you :odd.
 
 the specs have more examples.
 
+Special thanks to Jim Weirich for suggesting some great improvements in the syntax.
+
 == FEATURES/PROBLEMS:
 
 * FIX (list of features or problems)
