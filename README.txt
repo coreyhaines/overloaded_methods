@@ -24,6 +24,22 @@ overload_method :even_odd do |m|
 end
 However, this syntax may or may not be deprecated in favor of the when/do syntax.
 
+Here's an example of Fibonacci calculation:
+class CalculatesFibonacci
+  
+  class << self 
+    include OverloadedMethods
+    overload_method :entry do |m|
+      m.when{|which| which <= 1}.do{|which| which}
+      m.default{|which|
+          CalculatesFibonacci.entry(which-1) + CalculatesFibonacci.entry(which-2)
+        }
+    end
+  end
+end
+
+
+
 == FEATURES/PROBLEMS:
 
 * FIX (list of features or problems)
