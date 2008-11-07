@@ -4,13 +4,13 @@ class CalculatesFibonacci
   
   class << self 
     include OverloadedMethods
-  overload_method :entry do |m|
-    m.when{|which| which <= 1}.do{|which| which}
-    m.default{|which|
-        CalculatesFibonacci.entry(which-1) + CalculatesFibonacci.entry(which-2)
-      }
+    overload_method :entry do |m|
+      m.when{|which| which <= 1}.do{|which| which}
+      m.default{|which|
+          CalculatesFibonacci.entry(which-1) + CalculatesFibonacci.entry(which-2)
+        }
+    end
   end
-end
 end
 
 describe CalculatesFibonacci do
