@@ -1,30 +1,31 @@
 require File.dirname(__FILE__) + '/spec_helper.rb'
 
 class CalculatesFibonacci
-  include OverloadedMethods
   
+  class << self 
+    include OverloadedMethods
   overload_method :entry do |m|
     m.when{|which| which <= 1}.do{|which| which}
     m.default{|which|
-        calc = CalculatesFibonacci.new
-        calc.entry(which-1) + calc.entry(which-2)
+        CalculatesFibonacci.entry(which-1) + CalculatesFibonacci.entry(which-2)
       }
   end
+end
 end
 
 describe CalculatesFibonacci do
   it "should return 0 for 0" do
-    CalculatesFibonacci.new.entry(0).should == 0
+    CalculatesFibonacci.entry(0).should == 0
   end
   it "should return 1 for 1" do
-    CalculatesFibonacci.new.entry(1).should == 1
+    CalculatesFibonacci.entry(1).should == 1
   end
   it "should return 1 for 2" do
-    CalculatesFibonacci.new.entry(2).should == 1
+    CalculatesFibonacci.entry(2).should == 1
   end
   {3 => 2, 4 => 3, 5 => 5, 6 => 8}.each_pair {|which,value|
       it "should return #{value} for #{which}" do
-        CalculatesFibonacci.new.entry(which).should == value
+        CalculatesFibonacci.entry(which).should == value
       end
     }
   
