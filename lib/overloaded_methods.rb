@@ -13,7 +13,7 @@ module OverloadedMethods
       capture &block
     end
     alias :does :do
-    def execute params
+    def call *params
       @block.call *params
     end
     private
@@ -25,18 +25,17 @@ module OverloadedMethods
   class FunctionDefinition
     def initialize
       @clauses = []
+      @default = [nil, lambda { |*| nil }]
     end
     def when &predicate
       capture &predicate
     end
     alias :pattern :when
     def execute params
-      matching_pattern = @clauses.find{|predicate, _| predicate.call *params}
-      return matching_pattern[1].execute(params) unless matching_pattern.nil?
-      return @default.call(*params) unless @default.nil?
+      @clauses.find(->{@default}) {|predicate, _| predicate.call *params}.last.call(*params)
     end
     def default &block
-      @default = block
+      @default = [nil,block]
     end
     private
     def capture &predicate
