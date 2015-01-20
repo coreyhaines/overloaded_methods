@@ -1,8 +1,8 @@
-require File.dirname(__FILE__) + '/spec_helper.rb'
+require 'overloaded_methods'
 
 class CalculatesFibonacci
-  
-  class << self 
+
+  class << self
     include OverloadedMethods
     overload_method :entry do |m|
       m.when{|which| which <= 1}.do{|which| which}
@@ -28,13 +28,13 @@ describe CalculatesFibonacci do
         CalculatesFibonacci.entry(which).should == value
       end
     }
-  
+
 end
 
 
 class WithWhenDo
   include OverloadedMethods
-  
+
   overload_method :even_odd do |m|
     m.when {|number| number % 2 == 0 }.do { :even }
     m.when {|number| number % 2 == 1 }.do { :odd }
@@ -43,28 +43,28 @@ class WithWhenDo
   overload_method :hello_world do |m|
     m.when { true }.do {'hello, world'}
   end
-  
+
   overload_method :return_params do |m|
     m.when { |param1, param2| true}.do {|param1, param2| [param1, param2]}
   end
-  
+
   overload_method :two_params_collected do |m|
     m.default { |param1, *params| [param1, params] }
   end
-  
+
   overload_method :number_of_digits do |m|
     m.when {|number| number < 10}.do {1}
     m.when {|number| number< 100}.do {2}
     m.default { 'more than two digits is crazy talk'}
   end
-  
+
   overload_method :no_default do |m|
   end
-  
+
   overload_method :default_returns_parameters do |m|
     m.default { |*params| params}
   end
-  
+
 end
 
 class WithPatternDoes
@@ -72,16 +72,16 @@ class WithPatternDoes
   overload_method :hello_world do |m|
     m.pattern { true }.does {'hello, world'}
   end
-  
+
   overload_method :return_params do |m|
     m.pattern { |param1, param2| true}.does {|param1, param2| [param1, param2]}
   end
-  
+
   overload_method :even_odd do |m|
     m.pattern {|number| number % 2 == 0 }.does { :even }
     m.pattern {|number| number % 2 == 1 }.does { :odd }
   end
-  
+
   overload_method :number_of_digits do |m|
     m.pattern {|number| number < 10}.does {1}
     m.pattern {|number| number< 100}.does {2}
@@ -94,12 +94,12 @@ class WithPatternDoes
   overload_method :default_returns_parameters do |m|
     m.default { |*params| params}
   end
-  
+
   overload_method :two_params_collected do |m|
     m.default { |param1, *params| [param1, params] }
   end
-  
-  
+
+
 end
 
 
@@ -114,7 +114,7 @@ describe OverloadedMethods do
       it "should run the second method if the first pattern fails, second pattern passes" do
         klass.new.even_odd(3).should == :odd
       end
-    
+
       describe "when only a true pattern" do
         it "should add the method that you define" do
           klass.new.should respond_to(:hello_world)
@@ -162,8 +162,8 @@ describe OverloadedMethods do
         end
       end
     end
-    
+
     }
-  
-  
+
+
 end
