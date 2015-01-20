@@ -8,7 +8,7 @@ module OverloadedMethods
     end
   end
 
-  class BlockCollector
+  class ClauseBody
     def does &block
       capture &block
     end
@@ -44,7 +44,7 @@ module OverloadedMethods
     end
     private
     def capture &predicate
-      b = BlockCollector.new
+      b = ClauseBody.new
       @clauses << [predicate, b]
       b
     end
