@@ -9,12 +9,10 @@ module OverloadedMethods
   end
 
   class ClauseBody
-    def does &block
-      capture &block
-    end
     def do &block
       capture &block
     end
+    alias :does :do
     def execute params
       @block.call *params
     end
@@ -28,12 +26,10 @@ module OverloadedMethods
     def initialize
       @clauses = []
     end
-    def pattern &predicate
-      capture &predicate
-    end
     def when &predicate
       capture &predicate
     end
+    alias :pattern :when
     def execute params
       matching_pattern = @clauses.find{|predicate, _| predicate.call *params}
       return matching_pattern[1].execute(params) unless matching_pattern.nil?
