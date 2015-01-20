@@ -6,7 +6,7 @@ end
 
 class CalculatesFibonacci
   class << self
-    include OverloadedMethods
+    extend OverloadedMethods
     overload_method :entry do |m|
       m.when{|which| which <= 1}.do{|which| which}
       m.default{|which|
@@ -35,7 +35,7 @@ end
 
 
 class WithWhenDo
-  include OverloadedMethods
+  extend OverloadedMethods
 
   overload_method :even_odd do |m|
     m.when {|number| number % 2 == 0 }.do { :even }
@@ -70,7 +70,7 @@ class WithWhenDo
 end
 
 class WithPatternDoes
-  include OverloadedMethods
+  extend OverloadedMethods
   overload_method :hello_world do |m|
     m.pattern { true }.does {'hello, world'}
   end

@@ -1,7 +1,13 @@
-$:.unshift(File.dirname(__FILE__)) unless
-  $:.include?(File.dirname(__FILE__)) || $:.include?(File.expand_path(File.dirname(__FILE__)))
-
 module OverloadedMethods
+
+  def overload_method name
+    pattern_collector = PatternCollector.new
+    yield pattern_collector
+    define_method name do |*params|
+      pattern_collector.execute params
+    end
+  end
+
   class BlockCollector
     def does &block
       capture &block
@@ -42,22 +48,4 @@ module OverloadedMethods
       b
     end
   end
-
-
-
-
-  def self.included base
-     base.extend ClassMethods
-  end
-  module ClassMethods
-    def overload_method name
-      pattern_collector = PatternCollector.new
-      yield pattern_collector
-      define_method name do |*params|
-        pattern_collector.execute params
-      end
-    end
-  end
-
-
 end
