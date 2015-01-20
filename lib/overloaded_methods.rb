@@ -1,10 +1,10 @@
 module OverloadedMethods
 
   def overload_method name
-    pattern_collector = PatternCollector.new
-    yield pattern_collector
+    collector = FunctionDefinition.new
+    yield collector
     define_method name do |*params|
-      pattern_collector.execute params
+      collector.execute params
     end
   end
 
@@ -23,18 +23,19 @@ module OverloadedMethods
       @block = block
     end
   end
-  class PatternCollector
+
+  class FunctionDefinition
     def initialize
-      @patterns = []
+      @clauses = []
     end
-    def pattern &block
-      capture &block
+    def pattern &predicate
+      capture &predicate
     end
-    def when &block
-      capture &block
+    def when &predicate
+      capture &predicate
     end
     def execute params
-      matching_pattern = @patterns.find{|predicate, block| predicate.call *params}
+      matching_pattern = @clauses.find{|predicate, _| predicate.call *params}
       return matching_pattern[1].execute(params) unless matching_pattern.nil?
       return @default.call(*params) unless @default.nil?
     end
@@ -42,9 +43,9 @@ module OverloadedMethods
       @default = block
     end
     private
-    def capture &block
+    def capture &predicate
       b = BlockCollector.new
-      @patterns << [block, b]
+      @clauses << [predicate, b]
       b
     end
   end
