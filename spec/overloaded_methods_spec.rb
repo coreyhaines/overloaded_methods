@@ -1,7 +1,10 @@
 require 'overloaded_methods'
 
-class CalculatesFibonacci
+RSpec.configure do |c|
+  c.disable_monkey_patching!
+end
 
+class CalculatesFibonacci
   class << self
     include OverloadedMethods
     overload_method :entry do |m|
@@ -13,22 +16,21 @@ class CalculatesFibonacci
   end
 end
 
-describe CalculatesFibonacci do
+RSpec.describe CalculatesFibonacci do
   it "should return 0 for 0" do
-    CalculatesFibonacci.entry(0).should == 0
+    expect(CalculatesFibonacci.entry(0)).to eq(0)
   end
   it "should return 1 for 1" do
-    CalculatesFibonacci.entry(1).should == 1
+    expect(CalculatesFibonacci.entry(1)).to eq(1)
   end
   it "should return 1 for 2" do
-    CalculatesFibonacci.entry(2).should == 1
+    expect(CalculatesFibonacci.entry(2)).to eq(1)
   end
   {3 => 2, 4 => 3, 5 => 5, 6 => 8}.each_pair {|which,value|
       it "should return #{value} for #{which}" do
-        CalculatesFibonacci.entry(which).should == value
+        expect(CalculatesFibonacci.entry(which)).to eq(value)
       end
     }
-
 end
 
 
@@ -105,60 +107,60 @@ end
 
 
 
-describe OverloadedMethods do
+RSpec.describe OverloadedMethods do
   [WithWhenDo, WithPatternDoes].each {|klass|
     describe "#{klass.to_s}" do
       it "should run the first method if the first pattern passes" do
-        klass.new.even_odd(2).should == :even
+        expect(klass.new.even_odd(2)).to eq(:even)
       end
       it "should run the second method if the first pattern fails, second pattern passes" do
-        klass.new.even_odd(3).should == :odd
+        expect(klass.new.even_odd(3)).to eq(:odd)
       end
 
       describe "when only a true pattern" do
         it "should add the method that you define" do
-          klass.new.should respond_to(:hello_world)
+          expect(klass.new).to respond_to(:hello_world)
         end
         it "should call the block" do
-          klass.new.hello_world.should == 'hello, world'
+          expect(klass.new.hello_world).to eq('hello, world')
         end
       end
       describe "when calling with parameters" do
         it "should pass the parameters to the block" do
           returns = klass.new.return_params 'corey', 'haines'
-          returns.should include('corey')
-          returns.should include('haines')
+          expect(returns).to include('corey')
+          expect(returns).to include('haines')
         end
         describe "when trying to collect different parts of the parameters into an array" do
           it "should parse out the desired parameters and put the rest into an array" do
             return1, others = klass.new.two_params_collected 1, 2, 3
-            return1.should == 1
-            others.should include(2)
-            others.should include(3)
+            expect(return1).to eq(1)
+            expect(others).to include(2)
+            expect(others).to include(3)
           end
         end
 
       end
       describe "when calling with a pattern" do
         it "should run the first method if the first pattern passes" do
-          klass.new.even_odd(2).should == :even
+          expect(klass.new.even_odd(2)).to eq(:even)
         end
         it "should run the second method if the first pattern fails, second pattern passes" do
-          klass.new.even_odd(3).should == :odd
+          expect(klass.new.even_odd(3)).to eq(:odd)
         end
       end
 
       describe "when using the default" do
         it "should execute the default if no predicate passes" do
-          klass.new.number_of_digits(176).should == 'more than two digits is crazy talk'
+          expect(klass.new.number_of_digits(176)).to eq('more than two digits is crazy talk')
         end
         it "should not crash if there is no default given" do
-          klass.new.no_default.should be_nil
+          expect(klass.new.no_default).to be_nil
         end
         it "should pass the parameters to the default method, as well" do
           returns = klass.new.default_returns_parameters 'Rachel', 'Davis'
-          returns.should include('Rachel')
-          returns.should include('Davis')
+          expect(returns).to include('Rachel')
+          expect(returns).to include('Davis')
         end
       end
     end
