@@ -41,19 +41,16 @@ module OverloadedMethods
       @default = Clause.match_all.return(nil)
     end
     def when &predicate
-      capture &predicate
+      Clause.with_predicate(predicate).tap { |clause| @clauses << clause }
     end
     alias :pattern :when
     def execute params
-      (@clauses + [@default]).find { |clause| clause.match? *params }
-              .call(*params)
+      [*@clauses, @default]
+        .find { |clause| clause.match? *params }
+        .call(*params)
     end
     def default &block
       @default = Clause.match_all.do(&block)
-    end
-    private
-    def capture &predicate
-      Clause.with_predicate(predicate).tap { |clause| @clauses << clause }
     end
   end
 end
