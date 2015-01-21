@@ -8,40 +8,52 @@ module OverloadedMethods
     end
   end
 
-  class ClauseBody
+  class Clause
+    def self.match_all
+      new ->*{true}
+    end
+    def self.with_predicate(predicate)
+      new predicate
+    end
+    attr_reader :predicate
+    def initialize(predicate)
+      @predicate = predicate
+    end
+    def match?(*params)
+      @predicate.call(*params)
+    end
     def do &block
-      capture &block
+      @block = block
+      self
+    end
+    def return value
+      self.do {|*|value}
     end
     alias :does :do
     def call *params
       @block.call *params
-    end
-    private
-    def capture &block
-      @block = block
     end
   end
 
   class FunctionDefinition
     def initialize
       @clauses = []
-      @default = [nil, lambda { |*| nil }]
+      @default = Clause.match_all.return(nil)
     end
     def when &predicate
       capture &predicate
     end
     alias :pattern :when
     def execute params
-      @clauses.find(->{@default}) {|predicate, _| predicate.call *params}.last.call(*params)
+      (@clauses + [@default]).find { |clause| clause.match? *params }
+              .call(*params)
     end
     def default &block
-      @default = [nil,block]
+      @default = Clause.match_all.do(&block)
     end
     private
     def capture &predicate
-      b = ClauseBody.new
-      @clauses << [predicate, b]
-      b
+      Clause.with_predicate(predicate).tap { |clause| @clauses << clause }
     end
   end
 end
