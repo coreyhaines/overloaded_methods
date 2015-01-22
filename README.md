@@ -5,7 +5,7 @@
 
 [http://github.com/coreyhaines/overloaded_methods](http://github.com/coreyhaines/overloaded_methods)
 
-## DESCRIPTION:
+## Description
 
 overloaded_methods was inspired by erlang pattern matching. Basically, the idea is that you can specify a method and several code blocks based on aspects of the parameters. Here's an example:
 
@@ -16,7 +16,7 @@ overload_method :even_odd do |m|
 end
 ```
 
-You can then call even_odd(2) and get :even, even_odd(3) gives you :odd.
+You can then call ```even_odd(2)``` and get ```:even```, ```even_odd(3)``` gives you ```:odd```.
 
 the specs have more examples.
 
@@ -51,9 +51,9 @@ end
 ```
 
 
-## SYNOPSIS:
+## Synopsis
 
-The following is from the specs, just some examples of how to use it.
+Here are some examples of how to use it from [the specs](spec/overloaded_methods_spec.rb).
 
 ```ruby
 class WithWhenDo
@@ -89,11 +89,11 @@ class WithWhenDo
 end
 ```
 
-## REQUIREMENTS:
+## Requirements
 
 Ruby
 
-## INSTALL:
+## Install
 
 ```gem install overloaded_methods```
 
@@ -101,6 +101,14 @@ or, if using Bundler,
 
 ```gem 'overloaded_methods'```
 
-## LICENSE:
+## Do you use this
+
+Please [let me know](mailto:coreyhaines@gmail.com)
+
+## License
 
 See [License.txt](License.txt)
+
+## Monads
+
+Monads
