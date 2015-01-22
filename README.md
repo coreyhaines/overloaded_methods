@@ -1,8 +1,8 @@
-# overloaded_methods
+# Overloaded Methods
 
 [![Build Status](https://travis-ci.org/coreyhaines/overloaded_methods.svg?branch=master)](https://travis-ci.org/coreyhaines/overloaded_methods)
 
-http://github.com/coreyhaines/overloaded_methods
+[http://github.com/coreyhaines/overloaded_methods](http://github.com/coreyhaines/overloaded_methods)
 
 ## DESCRIPTION:
 
