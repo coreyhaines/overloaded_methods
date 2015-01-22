@@ -9,7 +9,7 @@
 
 overloaded_methods was inspired by erlang pattern matching. Basically, the idea is that you can specify a method and several code blocks based on aspects of the parameters. Here's an example:
 
-```
+```ruby
 overload_method :even_odd do |m|
   m.when {|number| number % 2 == 0 }.do { :even }
   m.when {|number| number % 2 == 1 }.do { :odd }
@@ -23,16 +23,19 @@ the specs have more examples.
 Special thanks to Jim Weirich for suggesting some great improvements in the syntax.
 
 There is an alternate syntax with pattern/does
-```
+
+```ruby
 overload_method :even_odd do |m|
   m.pattern {|number| number % 2 == 0 }.does { :even }
   m.pattern {|number| number % 2 == 1 }.does { :odd }
 end
 ```
+
 However, this syntax may or may not be deprecated in favor of the when/do syntax.
 
 Here's an example of Fibonacci calculation:
-```
+
+```ruby
 class CalculatesFibonacci
 
   class << self
@@ -52,7 +55,7 @@ end
 
 The following is from the specs, just some examples of how to use it.
 
-```
+```ruby
 class WithWhenDo
   include OverloadedMethods
 
