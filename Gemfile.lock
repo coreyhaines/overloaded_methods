@@ -1,3 +1,8 @@
+PATH
+  remote: .
+  specs:
+    overloaded_methods (3.2.7)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -19,4 +24,5 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  overloaded_methods!
   rspec (~> 3.0)
