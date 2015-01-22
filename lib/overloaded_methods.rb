@@ -1,3 +1,5 @@
+require "overloaded_methods/version"
+
 module OverloadedMethods
 
   def overload_method name
