@@ -108,14 +108,6 @@ end
 
 
 RSpec.describe OverloadedMethods do
-  specify '.overload_method returns the same thing def would' do
-    expected_return = actual_return = nil
-    Class.new { expected_return = def m; end }
-    Class.new { extend OverloadedMethods;
-                actual_return = overload_method(:m) { }
-              }
-    expect(actual_return).to eq expected_return
-  end
   [WithWhenDo, WithPatternDoes].each {|klass|
     describe "#{klass.to_s}" do
       it "should run the first method if the first pattern passes" do
