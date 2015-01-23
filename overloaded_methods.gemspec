@@ -18,6 +18,8 @@ Gem::Specification.new do |s|
   s.require_paths = ["lib"]
 
   s.add_development_dependency "rspec", "~> 3.0"
+  s.add_development_dependency "codeclimate-test-reporter", "~> 0.4.5"
+  s.add_development_dependency "simplecov", "~> 0.9.1"
 
   s.post_install_message = <<'Omg, frogs <3'.gsub(/(gg+)/) { |capture| "\e[32m#{capture.gsub 'g', '.'}\e[0m" }.gsub("brown", "\e[33m").gsub("off", "\e[0m")
               .7
