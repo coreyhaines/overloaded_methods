@@ -1,3 +1,14 @@
+require 'codeclimate-test-reporter'
+require 'simplecov'
+
+formatters = [SimpleCov::Formatter::HTMLFormatter]
+
+formatters << CodeClimate::TestReporter::Formatter if ENV['CODECLIMATE_REPO_TOKEN']
+
+SimpleCov.formatter = SimpleCov::Formatter::MultiFormatter[*formatters]
+
+SimpleCov.start
+
 require 'overloaded_methods'
 
 RSpec.configure do |c|
